@@ -8,27 +8,31 @@ def api_fn():
         key = input(f'\n Insert your Yahoo Finance API key: \n')
     
     # choose an action
-    actions = f'\n Choose an action (no space at the end): \n gcp-btc - get current price of BTC/USD \n gcp-eth - get current price of ETH/USD \n v - current version of the program \n exit - exit the program'
-    print(actions)    
-    # btc_usd_dict = 0
+    actions = f'\n Choose an action (no space at the end): \n btc-usd - get current info for BTC/USD pair \n eth-usd - get current info for ETH/USD pair \n v - current version of the program \n exit - exit the program'
+    print(actions)
     inp = input()
-    if inp == 'gcp-btc':
+    # if get current BTC price's been choosen
+    if inp == 'btc-usd':
         # Getting the response from API
         response = requests.get("https://yfapi.net/v6/finance/quote", headers={'x-api-key': key}, params={"symbols":"BTC-USD"})
         # Printing the output
-        print(f'\n Yahoo Finance (BTC-USD) \n Current price: {proc_json(response, "regularMarketPrice")} [USD/BTC] \n')
+        print(f'\n Yahoo Finance (BTC-USD) \n Current price: {proc_json(response, "regularMarketPrice")} [USD/BTC] \n Two hundred day average: {proc_json(response, "twoHundredDayAverage")} [USD/BTC] \n')
+        # print(f'\n SOMETHING EXTRA: \n {json.loads(response.text)} \n')
         # Repeating the function
         api_fn()
-    elif inp == 'gcp-eth':
+    # if get current ETH price's been choosen
+    elif inp == 'eth-usd':
         # Getting the response from API
         response = requests.get("https://yfapi.net/v6/finance/quote", headers={'x-api-key': key}, params={"symbols":"ETH-USD"})
         # Printing the output
-        print(f'\n Yahoo Finance (BTC-USD) \n Current price: {proc_json(response, "regularMarketPrice")} [USD/ETH] \n')
+        print(f'\n Yahoo Finance (ETH-USD) \n Current price: {proc_json(response, "regularMarketPrice")} [USD/ETH] \n Two hundred day average: {proc_json(response, "twoHundredDayAverage")} [USD/ETH]')
         # Repeating the function
         api_fn()
+    # if get version of the program's been choosen
     elif inp == 'v':
         print('1.0.0')
-        api_fn()    
+        api_fn()
+    # if exit function's been choosen
     elif inp == 'exit':
         print(f'Closing the program.')    
     else:
